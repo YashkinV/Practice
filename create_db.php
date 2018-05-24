@@ -20,6 +20,7 @@ CREATE TABLE catalog (
 	material varchar(32) NOT NULL default '',
 	status int(4) NOT NULL default 0,
 	price int(11) NOT NULL default 0,
+	img varchar(64) NOT NULL default '',
 	PRIMARY KEY (id)
 )";
 
@@ -46,6 +47,7 @@ CREATE TABLE orders (
 	price int(11) NOT NULL default 0,
 	customer varchar(32) NOT NULL default '',
 	quantity int(4) NOT NULL default 0,
+	status int(4) NOT NULL default 0,
 	datetime int(11) NOT NULL default 0,
 	PRIMARY KEY (id)
 )";
