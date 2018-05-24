@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 function save($artikul, $name, $size, $material, $status, $price, $img){
 	$sql = "INSERT INTO catalog(artikul, 
@@ -63,9 +63,9 @@ function addBasket($customer, $goodsid, $quantity, $datetime){
 								datetime)
 							VALUES(
 								'$customer', 
-								$goodsid, 
-								$quantity, 
-								$datetime
+								'$goodsid', 
+								'$quantity', 
+								'$datetime'
 								)";
 	mysql_query($sql) or die(mysql_error());
 }
@@ -78,7 +78,7 @@ function myBasket(){
                 size, 
 				material,
 				price,
-				img 
+				img,
 				basket.id, 
 				goodsid, 
 				customer, 
@@ -95,7 +95,11 @@ function delBasket($id){
 	$sql = "DELETE FROM basket WHERE id=$id";
 	mysql_query($sql) or die(mysql_error());
 }
-
-
+/*
+function clearBasket(){
+	$sql = "DELETE FROM basket";
+	mysql_query($sql) or die(mysql_error());
+}
+*/
 
 ?>
