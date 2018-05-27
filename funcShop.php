@@ -40,12 +40,13 @@ function selectAll(){
 	return dataBaseToArray($result);
 }
 //сортировка и фильтрация
-/*
+
 function selectP(){
-	$sql = "SELECT * FROM catalog ";
+	
+	$sql = "SELECT * FROM catalog WHERE id='$sort'";
 	$result = mysql_query($sql) or die(mysql_error());
 	return dataBaseToArray($result);
-}*/
+}
 
 function dataBaseToArray($result){
 	$array = array();
@@ -101,5 +102,33 @@ function clearBasket(){
 	mysql_query($sql) or die(mysql_error());
 }
 */
+
+function saveOrder($datetime){
+	$goods = myBasket();
+	foreach($goods as $item){
+		$sql = "INSERT INTO orders(
+							name,
+							size,
+							material,
+							price,
+							customer,
+							quantity,
+							
+							datetime)
+						 VALUES(
+						  '{$item["name"]}',
+						  {$item["size"]},
+						   '{$item["material"]}',
+						   {$item["price"]},
+						  '{$item["customer"]}',
+						   {$item["quantity"]},
+						   
+						   $datetime)";
+			mysql_query($sql) or die(mysql_error());
+	}
+	/*Запрос на удаление товаров из корзины*/
+	$sql = "DELETE FROM basket WHERE customer='".session_id()."'";
+	mysql_query($sql) or die(mysql_error());
+}
 
 ?>
