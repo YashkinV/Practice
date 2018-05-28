@@ -14,7 +14,7 @@ $datetime = time();
 $order = "$name|$email|$phone|$address|$customer|$datetime\n";
 
 if($name!=NULL&&$name!=NULL&&$phone!=NULL&&$address!=NULL){
-file_put_contents(ORDERS_LOG, $order, FILE_APPEND);
+file_put_contents(ORDERS, $order, FILE_APPEND);
 saveOrder($datetime);
 echo "Ваш заказ принят";
 }
