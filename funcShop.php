@@ -1,6 +1,8 @@
 <?php
 
 function save($artikul, $name, $size, $material, $status, $price, $img){
+	$source="../img/";
+	$jpg=".jpg";
 	$sql = "INSERT INTO catalog(artikul, 
                                 name, 
                                 size, 
@@ -16,7 +18,7 @@ function save($artikul, $name, $size, $material, $status, $price, $img){
 								'$material',
 								'$status',
 								'$price',
-								'$img'
+								'$source$img$jpg'
 								)";
 	mysql_query($sql) or die(mysql_error());
 }
@@ -41,9 +43,9 @@ function selectAll(){
 }
 //сортировка и фильтрация
 
-function selectP(){
+function selectP($sort){
 	
-	$sql = "SELECT * FROM catalog WHERE id='$sort'";
+	$sql = "SELECT * FROM catalog WHERE $sort";
 	$result = mysql_query($sql) or die(mysql_error());
 	return dataBaseToArray($result);
 }
@@ -131,4 +133,26 @@ function saveOrder($datetime){
 	mysql_query($sql) or die(mysql_error());
 }
 
+
+function getOrders(){
+	if(!file_exists(ORDERS)) return false;
+	$allorders = array();
+	$orders = file(ORDERS);
+	foreach($orders as $order){
+		list($name, $email, $phone, $address, $customer, $datetime) = explode("|", $order);
+		$orderinfo = array();
+			$orderinfo["name"] = $name;
+			$orderinfo["email"] = $email;
+			$orderinfo["phone"] = $phone;
+			$orderinfo["address"] = $address;
+			$orderinfo["datetime"] = $datetime * 1;
+		$sql = "SELECT * FROM orders
+						 WHERE customer='$customer' 
+						 AND datetime=".$orderinfo["datetime"];
+		$result = mysql_query($sql) or die(mysql_error());
+			$orderinfo["goods"] = dataBaseToArray($result);
+		$allorders[] = $orderinfo;
+	}
+	return $allorders;
+}
 ?>
