@@ -45,7 +45,7 @@ foreach($goods as $item){
 		<td><?=$item["material"]?></td>
 		<td><?=$item["price"]?></td>
 		<td><?=$item["quantity"]?></td>
-		<td><a href="delBasket.php?id=<?=$item["id"]?>">Удалить</td>?
+		<td><a href="delBasket.php?id=<?=$item["id"]?>">Удалить</td>
 	</tr>
 <?php
 /*Общая сумма товаров в корзине*/
@@ -56,12 +56,13 @@ foreach($goods as $item){
 </table>
 
 <p>Всего товаров в корзине на сумму: <?=$sum?> руб.
-
+<? if($count!=0){?>
 <div align="center">
    <input type="button" value="Оформить заказ!"
     onClick="location.href='orderform.php'">
 	
 </div>
+<?}?>
 
 </body>
 </html>
